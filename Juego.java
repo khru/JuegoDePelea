@@ -346,6 +346,7 @@ public class Juego
 				if(comprobacionSalud(enemigoMago) == -1)
 				{
 					System.out.println("El enemigo a sido eliminado");
+					luchador.clone();
 					return true;
 				}
 				else
@@ -378,7 +379,7 @@ public class Juego
 							{
 								System.out.println("El enemigo a sido eliminado");
 								//Clonamos al luchador para hacer que luche contra sí mismo
-								luchador.clone();
+								//luchador.clone();
 								//salir = true;
 								return true;
 							}
@@ -467,113 +468,117 @@ public class Juego
 				if(comprobacionSalud(enemigoLuchador) == -1)
 				{
 					System.out.println("El enemigo a sido eliminado");
+					//System.out.println("El daño infringido por la bola de fuego es de: " + mago.bolaDeFuego());
+					mago.clone();
 					return true;
 				}
-				generaEspacio();
-				System.out.println("=========================");
-				System.out.println("Informacion del enemigo: ");
-				System.out.println("=========================");
-				System.out.println(enemigo.toString());
-				System.out.println("=========================");
-				System.out.println("Tu informacion: ");
-				System.out.println("=========================");
-				System.out.println(jugador.toString());
-				System.out.println("=========================");;
-				System.out.println("+--------------------------------------------+");
-				System.out.println("|               Menu de acciones             |");
-				System.out.println("+--------------------------------------------+");
-				System.out.println("| 1 - Basico	        2 - Estocada         |");
-				System.out.println("| 3 - Vendar Heridas	4 - Huir             |");
-				System.out.println("+--------------------------------------------+");	
-				opc = teclado.nextInt();
-				switch(opc)
+				else
 				{
-					case 1: 
-						if (comprobacionSalud(enemigo) == 0)
-						{
-							enemigoLuchador.setSalud(enemigoLuchador.getSalud() + enemigoLuchador.vendarHeridas());
-						}
-						if(comprobacionSalud(enemigo) == -1)
-						{
-							System.out.println("El enemigo a sido eliminado");
-							//Clonamos al luchador para hacer que luche contra sí mismo
-							mago.clone();
-							//salir = true;
-							return true;
-						}
-						if(comprobacionSalud(jugador) == 1)
-						{
-							basico(jugador,enemigo);
-						}
-						if (comprobacionSalud(jugador) == 0)
-						{
-							mago.setSalud(mago.getSalud() + mago.cura());
-						}
-						if(comprobacionSalud(jugador) == -1)
-						{
-							System.out.println("Tu personaje a muerto");
-							//salir = true;
-							return false;
-						}
-					break;
-					case 2: 
-						/*
-						 * Cuando se emplea una habilidad como bolaDeFuego el enemigo también pega y es posible morir de un golpe
-						 * se ha de tener cuidado debido a que si te curas no pegas, es decir, este juego es complicado.
-						 */
-						if(comprobacionSalud(enemigo) == 1)
-						{
-							//para bajarle dificultad le he añadido u factor aleatorio a la bola del enemigo aún así se puede perder
-							if(aleatorio() == 10 || aleatorio() == 12)
+					generaEspacio();
+					System.out.println("=========================");
+					System.out.println("Informacion del enemigo: ");
+					System.out.println("=========================");
+					System.out.println(enemigo.toString());
+					System.out.println("=========================");
+					System.out.println("Tu informacion: ");
+					System.out.println("=========================");
+					System.out.println(jugador.toString());
+					System.out.println("=========================");;
+					System.out.println("+--------------------------------------------+");
+					System.out.println("|               Menu de acciones             |");
+					System.out.println("+--------------------------------------------+");
+					System.out.println("| 1 - Basico	        2 - Estocada         |");
+					System.out.println("| 3 - Vendar Heridas	4 - Huir             |");
+					System.out.println("+--------------------------------------------+");	
+					opc = teclado.nextInt();
+					switch(opc)
+					{
+						case 1: 
+							if (comprobacionSalud(enemigo) == 0)
 							{
-								mago.setSalud(mago.getSalud() - enemigoLuchador.estocada());
+								enemigoLuchador.setSalud(enemigoLuchador.getSalud() + enemigoLuchador.vendarHeridas());
 							}
-							else
+							if(comprobacionSalud(enemigo) == -1)
 							{
-								
+								System.out.println("El enemigo a sido eliminado");
+								return true;
 							}
-						}
-						if (comprobacionSalud(enemigo) == 0)
-						{
-							enemigoLuchador.setSalud(enemigoLuchador.getSalud() + enemigoLuchador.vendarHeridas());
-						}
-						if(comprobacionSalud(enemigo) == -1)
-						{
-							System.out.println("El enemigo a sido eliminado");
-							System.out.println("El daño infringido por la estocada es de: " + mago.bolaDeFuego());
-							//salir = true;
-							return true;
-						}
-						if(comprobacionSalud(jugador) == 1)
-						{
-							enemigoLuchador.setSalud(enemigoLuchador.getSalud() - mago.bolaDeFuego());
+							if(comprobacionSalud(jugador) == 1)
+							{
+								basico(jugador,enemigo);
+							}
+							if (comprobacionSalud(jugador) == 0)
+							{
+								mago.setSalud(mago.getSalud() + mago.cura());
+							}
+							if(comprobacionSalud(jugador) == -1)
+							{
+								System.out.println("Tu personaje a muerto");
+								System.out.println("El daño recivido por la estocada es de: " + enemigoLuchador.estocada());
+								//salir = true;
+								return false;
+							}
+						break;
+						case 2: 
+							/*
+							 * Cuando se emplea una habilidad como bolaDeFuego el enemigo también pega y es posible morir de un golpe
+							 * se ha de tener cuidado debido a que si te curas no pegas, es decir, este juego es complicado.
+							 */
+							if(comprobacionSalud(enemigo) == 1)
+							{
+								//para bajarle dificultad le he añadido u factor aleatorio a la bola del enemigo aún así se puede perder
+								if(aleatorio() == 10 || aleatorio() == 12)
+								{
+									mago.setSalud(mago.getSalud() - enemigoLuchador.estocada());
+								}
+								else
+								{
+									
+								}
+							}
+							if (comprobacionSalud(enemigo) == 0)
+							{
+								enemigoLuchador.setSalud(enemigoLuchador.getSalud() + enemigoLuchador.vendarHeridas());
+							}
+							if(comprobacionSalud(enemigo) == -1)
+							{
+								System.out.println("El enemigo a sido eliminado");
+								System.out.println("El daño infringido por la estocada es de: " + mago.bolaDeFuego());
+								//salir = true;
+								return true;
+							}
+							if(comprobacionSalud(jugador) == 1)
+							{
+								enemigoLuchador.setSalud(enemigoLuchador.getSalud() - mago.bolaDeFuego());
 
-						}
-						if (comprobacionSalud(jugador) == 0)
-						{
+							}
+							if (comprobacionSalud(jugador) == 0)
+							{
+								mago.setSalud(mago.getSalud() + mago.cura());
+							}
+							if(comprobacionSalud(jugador) == -1)
+							{
+								System.out.println("Tu personaje a muerto");
+								System.out.println("El daño recivido por la estocada es de: " + enemigoLuchador.estocada());
+								//salir = true;
+								return false;
+							}
+						break;
+						case 3:
 							mago.setSalud(mago.getSalud() + mago.cura());
-						}
-						if(comprobacionSalud(jugador) == -1)
-						{
-							System.out.println("Tu personaje a muerto");
-							System.out.println("El daño recivido por la Bola de fuego es de: " + enemigoLuchador.estocada());
-							//salir = true;
-							return false;
-						}
-					break;
-					case 3:
-						mago.setSalud(mago.getSalud() + mago.cura());
-					break;
-					case 4:
-						if(mensajeHuir(huir()) == true)
-						{
-							return false;
-						}
-					break;
-					default:
-						errorParametro();
-					break;
+						break;
+						case 4:
+							if(mensajeHuir(huir()) == true)
+							{
+								return false;
+							}
+						break;
+						default:
+							errorParametro();
+						break;
+					}
 				}
+				
 			}while(salir != false);
 		}
 		return salir;
@@ -603,7 +608,7 @@ public class Juego
 		}
 		else
 		{
-			if((mago.getAgilidad() >= luchador.getAgilidad()) && (mago.getSabiduria() >= luchador.getSabiduria()) || (mago.getAgilidad() >= luchador.getAgilidad() && mago.getDestreza() >= luchador.getDestreza()) || (mago.getDestreza() >= luchador.getDestreza()) && (mago.getSabiduria() >= luchador.getSabiduria()))
+			if((mago.getAgilidad() >= enemigoLuchador.getAgilidad()) && (mago.getSabiduria() >= enemigoLuchador.getSabiduria()) || (mago.getAgilidad() >= enemigoLuchador.getAgilidad() && mago.getDestreza() >= enemigoLuchador.getDestreza()) || (mago.getDestreza() >= enemigoLuchador.getDestreza()) && (mago.getSabiduria() >= enemigoLuchador.getSabiduria()))
 			{
 				enemigoLuchador.setSalud(enemigoLuchador.getSalud() - mago.getFuerza());
 				mago.setSalud(mago.getSalud() - enemigoLuchador.getFuerza());
