@@ -445,7 +445,14 @@ public class Juego
 							}
 						break;
 						case 3:
-							luchador.setSalud(luchador.getSalud() + luchador.vendarHeridas());
+							if(luchador.getSalud() >= salud)
+							{
+								luchador.setSalud(luchador.getSalud() - enemigoMago.getFuerza());
+							}
+							else
+							{
+								luchador.setSalud(luchador.getSalud() + luchador.vendarHeridas());
+							}
 						break;
 						case 4:
 							if(mensajeHuir(huir()) == true)
@@ -565,7 +572,16 @@ public class Juego
 							}
 						break;
 						case 3:
-							mago.setSalud(mago.getSalud() + mago.cura());
+							//Prevención anticraking (no podemos dejar que el usuario presione 3 durante un rato y entonces se pelee)
+							//Si la vida es 100 o más el enemigo le pegará y el mago no se curará nada
+							if(mago.getSalud() >= salud)
+							{
+								mago.setSalud(mago.getSalud() - enemigoLuchador.getFuerza());
+							}
+							else
+							{
+								mago.setSalud(mago.getSalud() + mago.cura());
+							}
 						break;
 						case 4:
 							if(mensajeHuir(huir()) == true)
